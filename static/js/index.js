@@ -469,7 +469,7 @@ function createDemoCell(demo, robot = 'car', type = 'ori') {
   const videoPairVideos = document.createElement('div');
   videoPairVideos.className = 'video-pair-videos';
   
-  // Final video (no controls, lazy load)
+  // Final video (no controls, lazy load) - use compressed version for gallery
   const finalVideo = document.createElement('video');
   finalVideo.setAttribute('muted', '');
   finalVideo.setAttribute('loop', '');
@@ -478,11 +478,11 @@ function createDemoCell(demo, robot = 'car', type = 'ori') {
   finalVideo.muted = true;
   finalVideo.dataset.loaded = 'false'; // Track loading state
   const finalSource = document.createElement('source');
-  finalSource.src = `./static/videos_vp9/${robot}/${type}/${demo.folder}/${demo.folder}_final_vp9.webm`;
+  finalSource.src = `./static/videos_vp9_compressed/${robot}/${type}/${demo.folder}/${demo.folder}_final_vp9.webm`;
   finalSource.type = 'video/webm';
   finalVideo.appendChild(finalSource);
   
-  // Footage video (no controls, lazy load)
+  // Footage video (no controls, lazy load) - use compressed version for gallery
   const footageVideo = document.createElement('video');
   footageVideo.setAttribute('muted', '');
   footageVideo.setAttribute('loop', '');
@@ -494,7 +494,7 @@ function createDemoCell(demo, robot = 'car', type = 'ori') {
   const footageName = demo.folder.replace('bagfile_', '');
   // Go2 robot uses 'go2_' prefix for footage files
   const footagePrefix = robot === 'go2' ? 'go2_' : '';
-  footageSource.src = `./static/videos_vp9/${robot}/${type}/${demo.folder}/${footagePrefix}${footageName}_footage_vp9.webm`;
+  footageSource.src = `./static/videos_vp9_compressed/${robot}/${type}/${demo.folder}/${footagePrefix}${footageName}_footage_vp9.webm`;
   footageSource.type = 'video/webm';
   footageVideo.appendChild(footageSource);
   
