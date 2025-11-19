@@ -1,0 +1,4 @@
+locker
+whiteboard
+bag
+person bench

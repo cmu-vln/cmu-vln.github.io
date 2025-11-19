@@ -17,21 +17,7 @@
   <meta name="description" content="The Official Website for CMU-VLN.">
   <meta name="keywords" content="Vision-Language Navigation, Object Navigation, Embodied AI">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nerfies: Deformable Neural Radiance Fields</title>
-
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
+  <title>CMU-VLN: The official webpage for Vision-Language Navigation Project in Zhang Lab in CMU.</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
@@ -66,7 +52,7 @@
     </div>
     <div class="navbar-menu">
       <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-        <a class="navbar-item" href="https://keunhong.com">
+        <a class="navbar-item" href="https://www.ri.cmu.edu/robotics-groups/zhang-lab/">
           <span class="icon">
             <i class="fas fa-home"></i>
           </span>
@@ -77,17 +63,11 @@
             More Research
           </a>
           <div class="navbar-dropdown">
-            <a class="navbar-item" href="https://hypernerf.github.io">
-              HyperNeRF
+            <a class="navbar-item" href="https://cmu-vln.github.io">
+              Object Navigation
             </a>
-            <a class="navbar-item" href="https://nerfies.github.io">
-              Nerfies
-            </a>
-            <a class="navbar-item" href="https://latentfusion.github.io">
-              LatentFusion
-            </a>
-            <a class="navbar-item" href="https://photoshape.github.io">
-              PhotoShape
+            <a class="navbar-item" href="https://cmu-vln.github.io">
+              Vision-Language Navigation (Coming Soon)
             </a>
           </div>
         </div>
@@ -205,51 +185,230 @@
   <section class="hero is-light is-small">
     <div class="hero-body">
       <div class="container">
-        <div id="results-carousel" class="carousel results-carousel">
-          <div class="item item-steve">
-            <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/steve.mp4" type="video/mp4">
-            </video>
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Demo Gallery - Original (car/ori)</h2>
+        
+        <!-- Gallery Container -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="gallerySlider">
+            <!-- Page 1: Demos 1-6 -->
+            <div class="gallery-page">
+              <div class="demo-grid-3x2" id="page1"></div>
+            </div>
+            
+            <!-- Page 2: Demos 7-12 -->
+            <div class="gallery-page">
+              <div class="demo-grid-3x2" id="page2"></div>
+            </div>
+            
+            <!-- Page 3: Demos 13-18 -->
+            <div class="gallery-page">
+              <div class="demo-grid-3x2" id="page3"></div>
+            </div>
+            
+            <!-- Page 4: Demos 19-23 + Empty -->
+            <div class="gallery-page">
+              <div class="demo-grid-3x2" id="page4"></div>
+            </div>
           </div>
-          <div class="item item-chair-tp">
-            <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/chair-tp.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-shiba">
-            <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/shiba.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-fullbody">
-            <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/fullbody.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-blueshirt">
-            <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/blueshirt.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-mask">
-            <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/mask.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-coffee">
-            <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/coffee.mp4" type="video/mp4">
-            </video>
-          </div>
-          <div class="item item-toby">
-            <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-              <source src="./static/videos/toby2.mp4" type="video/mp4">
-            </video>
+          
+          <!-- Navigation -->
+          <div class="gallery-nav">
+            <button id="prevBtn" onclick="navigateGallery(-1)">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="gallery-page-indicator">
+              Page <span id="currentPage">1</span> of 4
+            </span>
+            <button id="nextBtn" onclick="navigateGallery(1)">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Self Attribute Gallery -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Demo Gallery - Self Attribute (car/self)</h2>
+        
+        <!-- Gallery Container for Self -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="gallerySelfSlider">
+            <!-- Page 1: Demos 1-4 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="selfPage1"></div>
+            </div>
+            
+            <!-- Page 2: Demos 5-8 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="selfPage2"></div>
+            </div>
+          </div>
+          
+          <!-- Navigation -->
+          <div class="gallery-nav">
+            <button id="prevSelfBtn" onclick="navigateSelfGallery(-1)">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="gallery-page-indicator">
+              Page <span id="currentSelfPage">1</span> of 2
+            </span>
+            <button id="nextSelfBtn" onclick="navigateSelfGallery(1)">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Spatial Condition Gallery -->
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Demo Gallery - Spatial Condition (car/spatial)</h2>
+        
+        <!-- Gallery Container for Spatial -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="gallerySpatialSlider">
+            <!-- Single Page: All 6 demos (3x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-3x2" id="spatialPage1"></div>
+            </div>
+          </div>
+          
+          <!-- No navigation needed for single page -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GO2 Original Gallery -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Demo Gallery - Original (go2/ori)</h2>
+        
+        <!-- Gallery Container for Go2 Ori -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="galleryGo2OriSlider">
+            <!-- Page 1: Demos 1-4 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="go2OriPage1"></div>
+            </div>
+            
+            <!-- Page 2: Demos 5-7 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="go2OriPage2"></div>
+            </div>
+          </div>
+          
+          <!-- Navigation -->
+          <div class="gallery-nav">
+            <button id="prevGo2OriBtn" onclick="navigateGo2OriGallery(-1)">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="gallery-page-indicator">
+              Page <span id="currentGo2OriPage">1</span> of 2
+            </span>
+            <button id="nextGo2OriBtn" onclick="navigateGo2OriGallery(1)">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GO2 Self Attribute Gallery -->
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Demo Gallery - Self Attribute (go2/self)</h2>
+        
+        <!-- Gallery Container for Go2 Self -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="galleryGo2SelfSlider">
+            <!-- Page 1: Demos 1-4 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="go2SelfPage1"></div>
+            </div>
+            
+            <!-- Page 2: Demos 5-6 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="go2SelfPage2"></div>
+            </div>
+          </div>
+          
+          <!-- Navigation -->
+          <div class="gallery-nav">
+            <button id="prevGo2SelfBtn" onclick="navigateGo2SelfGallery(-1)">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="gallery-page-indicator">
+              Page <span id="currentGo2SelfPage">1</span> of 2
+            </span>
+            <button id="nextGo2SelfBtn" onclick="navigateGo2SelfGallery(1)">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GO2 Spatial Condition Gallery -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">Demo Gallery - Spatial Condition (go2/spatial)</h2>
+        
+        <!-- Gallery Container for Go2 Spatial -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="galleryGo2SpatialSlider">
+            <!-- Page 1: Demos 1-4 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="go2SpatialPage1"></div>
+            </div>
+            
+            <!-- Page 2: Demo 5 only (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="go2SpatialPage2"></div>
+            </div>
+          </div>
+          
+          <!-- Navigation -->
+          <div class="gallery-nav">
+            <button id="prevGo2SpatialBtn" onclick="navigateGo2SpatialGallery(-1)">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="gallery-page-indicator">
+              Page <span id="currentGo2SpatialPage">1</span> of 2
+            </span>
+            <button id="nextGo2SpatialBtn" onclick="navigateGo2SpatialGallery(1)">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Modal -->
+  <div id="videoModal" class="video-modal">
+    <span class="modal-close" onclick="closeVideoModal()">&times;</span>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="modalTitle"></h2>
+      </div>
+      <div class="modal-video-pair" id="modalVideoPair">
+        <!-- Videos with individual controls will be inserted here -->
+      </div>
+    </div>
+  </div>
 
 
   <section class="section">

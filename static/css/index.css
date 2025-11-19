@@ -155,3 +155,353 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+/* Gallery page container */
+.gallery-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Slider wrapper */
+.gallery-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* Each page (3x2 grid) */
+.gallery-page {
+  min-width: 100%;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* 3x2 Grid layout */
+.demo-grid-3x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 2x2 Grid layout for self attribute gallery */
+.demo-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 2x1 Grid layout for go2 galleries */
+.demo-grid-2x1 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr;
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Each demo cell */
+.demo-cell {
+  background: #f5f5f5;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.demo-cell.empty {
+  background: transparent;
+  box-shadow: none;
+}
+
+/* Title for each demo */
+.demo-title {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #363636;
+}
+
+/* Highlight target words in instructions */
+.highlight-target {
+  color: #f39c12;
+  font-weight: 700;
+}
+
+/* Highlight self attribute (red) */
+.highlight-attribute {
+  color: #e74c3c;
+  font-weight: 700;
+}
+
+/* Highlight spatial condition (blue) */
+.highlight-spatial {
+  color: #3498db;
+  font-weight: 700;
+}
+
+/* Video pair container */
+.video-pair {
+  display: flex;
+  gap: 0.5rem;
+  height: 100%;
+}
+
+.video-pair-videos {
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.video-pair-videos video {
+  width: 50%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* Navigation buttons */
+.gallery-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.gallery-nav button {
+  background: #3273dc;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.gallery-nav button:hover:not(:disabled) {
+  background: #2366d1;
+}
+
+.gallery-nav button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.gallery-page-indicator {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #363636;
+}
+
+/* Responsive design */
+@media screen and (max-width: 1024px) {
+  .demo-grid-3x2 {
+    gap: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .demo-grid-3x2 {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+  
+  .gallery-page {
+    padding: 1rem;
+  }
+}
+
+/* Modal for fullscreen video playback */
+.video-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  overflow: auto;
+}
+
+.video-modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 1400px;
+  padding: 2rem;
+}
+
+.modal-header {
+  color: white;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.modal-video-pair {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.modal-video-pair video {
+  width: 50%;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Custom video controls */
+.custom-video-controls {
+  width: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #3273dc;
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.1s linear;
+  position: relative;
+}
+
+.progress-handle {
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.control-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: white;
+}
+
+.control-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.control-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.time-display {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  min-width: 100px;
+}
+
+.modal-close {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 10001;
+  line-height: 1;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.modal-close:hover {
+  color: #ff4444;
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+/* Add hover effect to demo cells */
+.demo-cell:not(.empty) {
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.demo-cell:not(.empty):hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive modal */
+@media screen and (max-width: 768px) {
+  .modal-video-pair {
+    flex-direction: column;
+  }
+  
+  .modal-video-pair video {
+    width: 100%;
+  }
+  
+  .modal-content {
+    padding: 1rem;
+  }
+  
+  .modal-title {
+    font-size: 1.5rem;
+  }
+}
