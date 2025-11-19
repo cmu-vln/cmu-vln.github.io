@@ -1,5 +1,141 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
+// Configuration: Shuffle videos within each section
+const SHUFFLE_VIDEOS = true; // Set to true to interleave by location, false to keep original order
+
+// Function to extract location/scene from demo folder name
+function extractLocation(folderName) {
+  // Extract the location prefix (e.g., "frc", "katia", "nsh", "gates", "hci")
+  const match = folderName.match(/bagfile_([^_]+)/);
+  return match ? match[1] : 'unknown';
+}
+
+// Function to interleave demos from different locations across pages
+function interleaveByLocation(array) {
+  if (!SHUFFLE_VIDEOS) return array;
+  
+  // Group demos by location
+  const locationGroups = {};
+  array.forEach((demo, index) => {
+    const location = extractLocation(demo.folder);
+    if (!locationGroups[location]) {
+      locationGroups[location] = [];
+    }
+    locationGroups[location].push({ demo, originalIndex: index });
+  });
+  
+  // Get all location keys and sort them for consistency
+  const locations = Object.keys(locationGroups).sort();
+  
+  // Interleave demos from different locations
+  const interleaved = [];
+  let maxGroupSize = Math.max(...locations.map(loc => locationGroups[loc].length));
+  
+  // Round-robin through locations
+  for (let i = 0; i < maxGroupSize; i++) {
+    for (const location of locations) {
+      if (i < locationGroups[location].length) {
+        interleaved.push(locationGroups[location][i].demo);
+      }
+    }
+  }
+  
+  return interleaved;
+}
+
+// Simple Video Carousel Variables
+let currentVideoSlide = 0;
+let youtubePlayers = [];
+
+// Load YouTube IFrame API
+function loadYouTubeAPI() {
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  const firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
+// This function will be called when YouTube API is ready
+window.onYouTubeIframeAPIReady = function() {
+  const iframes = document.querySelectorAll('.video-slide iframe');
+  iframes.forEach((iframe, index) => {
+    const player = new YT.Player(iframe, {
+      events: {
+        'onReady': function(event) {
+          // Set volume to 33%
+          event.target.setVolume(33);
+          youtubePlayers[index] = event.target;
+        }
+      }
+    });
+  });
+};
+
+// Function to pause all YouTube videos
+function pauseAllYouTubeVideos() {
+  // Try using the player objects if available
+  if (youtubePlayers.length > 0) {
+    youtubePlayers.forEach(player => {
+      if (player && player.pauseVideo) {
+        player.pauseVideo();
+      }
+    });
+  }
+  
+  // Fallback to postMessage method
+  const iframes = document.querySelectorAll('.video-slide iframe');
+  iframes.forEach(iframe => {
+    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+  });
+}
+
+// Change video slide function
+function changeVideoSlide(direction) {
+  const slides = document.querySelectorAll('.video-slide');
+  const dots = document.querySelectorAll('.carousel-dots .dot');
+  
+  // Pause all videos before switching
+  pauseAllYouTubeVideos();
+  
+  // Remove active class from current slide
+  slides[currentVideoSlide].classList.remove('active');
+  dots[currentVideoSlide].classList.remove('active');
+  
+  // Calculate new slide index
+  currentVideoSlide = currentVideoSlide + direction;
+  
+  // Loop around if at edges
+  if (currentVideoSlide >= slides.length) {
+    currentVideoSlide = 0;
+  } else if (currentVideoSlide < 0) {
+    currentVideoSlide = slides.length - 1;
+  }
+  
+  // Add active class to new slide
+  slides[currentVideoSlide].classList.add('active');
+  dots[currentVideoSlide].classList.add('active');
+}
+
+// Go to specific slide
+function goToVideoSlide(slideIndex) {
+  const slides = document.querySelectorAll('.video-slide');
+  const dots = document.querySelectorAll('.carousel-dots .dot');
+  
+  // Pause all videos before switching
+  pauseAllYouTubeVideos();
+  
+  // Remove active class from current slide
+  slides[currentVideoSlide].classList.remove('active');
+  dots[currentVideoSlide].classList.remove('active');
+  
+  // Set new slide
+  currentVideoSlide = slideIndex;
+  
+  // Add active class to new slide
+  slides[currentVideoSlide].classList.add('active');
+  dots[currentVideoSlide].classList.add('active');
+}
+
 var INTERP_BASE = "./static/interpolation/stacked";
 var NUM_INTERP_FRAMES = 240;
 
@@ -99,6 +235,9 @@ function initLazyLoadVideos() {
 
 
 $(document).ready(function() {
+    // Load YouTube API for volume control
+    loadYouTubeAPI();
+    
     // Initialize all demo galleries
     initDemoGallery();
     initSelfGallery();
@@ -120,6 +259,25 @@ $(document).ready(function() {
 
     });
 
+    // Initialize YouTube video carousel with specific settings
+    var youtubeCarouselElement = document.getElementById('results-carousel');
+    if (youtubeCarouselElement) {
+      var youtubeOptions = {
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        loop: true,
+        infinite: true,
+        autoplay: true,
+        autoplaySpeed: 5000,
+        pagination: true,
+        navigation: true
+      }
+      
+      var youtubeCarousel = bulmaCarousel.attach('#results-carousel', youtubeOptions);
+      console.log('YouTube carousel initialized:', youtubeCarousel);
+    }
+
+    // Initialize other carousels
     var options = {
 			slidesToScroll: 1,
 			slidesToShow: 1,
@@ -129,8 +287,8 @@ $(document).ready(function() {
 			autoplaySpeed: 3000,
     }
 
-		// Initialize all div with carousel class
-    var carousels = bulmaCarousel.attach('.carousel', options);
+		// Initialize all other div with carousel class (excluding results-carousel)
+    var carousels = bulmaCarousel.attach('.carousel:not(#results-carousel)', options);
 
     // Loop on each carousel initialized
     for(var i = 0; i < carousels.length; i++) {
@@ -209,7 +367,9 @@ const selfDemoData = [
   { name: "FRC Self Trash Can Blue 1", folder: "bagfile_frc_self_trash_can_blue_1" },
   { name: "FRC Self Trash Can Blue 2", folder: "bagfile_frc_self_trash_can_blue_2" },
   { name: "FRC Self Whiteboard 1", folder: "bagfile_frc_self_whiteboard_1" },
-  { name: "FRC Self Whiteboard 2", folder: "bagfile_frc_self_whiteboard_2" }
+  { name: "FRC Self Whiteboard 2", folder: "bagfile_frc_self_whiteboard_2" },
+  { name: "NSH 3 Self Chair Black 1", folder: "bagfile_nsh_3_self_chair_black_1" },
+  { name: "NSH 3 Self Chair Black 2", folder: "bagfile_nsh_3_self_chair_black_2" }
 ];
 
 // Spatial condition demo data - all 6 demos from car/spatial
@@ -257,7 +417,7 @@ const totalPages = 4;
 const demosPerPage = 6;
 
 let currentSelfGalleryPage = 0;
-const totalSelfPages = 2;
+const totalSelfPages = 3;
 const selfDemosPerPage = 4;
 
 let currentGo2OriGalleryPage = 0;
@@ -274,15 +434,18 @@ const go2SpatialDemosPerPage = 4;
 
 // Initialize demo gallery (original)
 function initDemoGallery() {
+  // Apply interleaving if enabled
+  const demos = interleaveByLocation(demoData);
+  
   // Fill each page with demos
   for (let page = 0; page < totalPages; page++) {
     const pageElement = document.getElementById(`page${page + 1}`);
     const startIdx = page * demosPerPage;
-    const endIdx = Math.min(startIdx + demosPerPage, demoData.length);
+    const endIdx = Math.min(startIdx + demosPerPage, demos.length);
     
     for (let i = startIdx; i < startIdx + demosPerPage; i++) {
-      if (i < demoData.length) {
-        const demo = demoData[i];
+      if (i < demos.length) {
+        const demo = demos[i];
         const demoCell = createDemoCell(demo, 'car', 'ori');
         pageElement.appendChild(demoCell);
       } else {
@@ -299,13 +462,16 @@ function initDemoGallery() {
 
 // Initialize self attribute gallery
 function initSelfGallery() {
+  // Apply interleaving if enabled
+  const demos = interleaveByLocation(selfDemoData);
+  
   for (let page = 0; page < totalSelfPages; page++) {
     const pageElement = document.getElementById(`selfPage${page + 1}`);
     const startIdx = page * selfDemosPerPage;
     
     for (let i = startIdx; i < startIdx + selfDemosPerPage; i++) {
-      if (i < selfDemoData.length) {
-        const demo = selfDemoData[i];
+      if (i < demos.length) {
+        const demo = demos[i];
         const demoCell = createDemoCell(demo, 'car', 'self');
         pageElement.appendChild(demoCell);
       }
@@ -317,9 +483,12 @@ function initSelfGallery() {
 
 // Initialize spatial condition gallery
 function initSpatialGallery() {
+  // Apply interleaving if enabled
+  const demos = interleaveByLocation(spatialDemoData);
+  
   const pageElement = document.getElementById('spatialPage1');
   
-  spatialDemoData.forEach(demo => {
+  demos.forEach(demo => {
     const demoCell = createDemoCell(demo, 'car', 'spatial');
     pageElement.appendChild(demoCell);
   });
@@ -327,13 +496,16 @@ function initSpatialGallery() {
 
 // Initialize go2 ori gallery
 function initGo2OriGallery() {
+  // Apply interleaving if enabled
+  const demos = interleaveByLocation(go2OriDemoData);
+  
   for (let page = 0; page < totalGo2OriPages; page++) {
     const pageElement = document.getElementById(`go2OriPage${page + 1}`);
     const startIdx = page * go2OriDemosPerPage;
     
     for (let i = startIdx; i < startIdx + go2OriDemosPerPage; i++) {
-      if (i < go2OriDemoData.length) {
-        const demo = go2OriDemoData[i];
+      if (i < demos.length) {
+        const demo = demos[i];
         const demoCell = createDemoCell(demo, 'go2', 'ori');
         pageElement.appendChild(demoCell);
       }
@@ -345,13 +517,16 @@ function initGo2OriGallery() {
 
 // Initialize go2 self gallery
 function initGo2SelfGallery() {
+  // Apply interleaving if enabled
+  const demos = interleaveByLocation(go2SelfDemoData);
+  
   for (let page = 0; page < totalGo2SelfPages; page++) {
     const pageElement = document.getElementById(`go2SelfPage${page + 1}`);
     const startIdx = page * go2SelfDemosPerPage;
     
     for (let i = startIdx; i < startIdx + go2SelfDemosPerPage; i++) {
-      if (i < go2SelfDemoData.length) {
-        const demo = go2SelfDemoData[i];
+      if (i < demos.length) {
+        const demo = demos[i];
         const demoCell = createDemoCell(demo, 'go2', 'self');
         pageElement.appendChild(demoCell);
       }
@@ -363,13 +538,16 @@ function initGo2SelfGallery() {
 
 // Initialize go2 spatial gallery
 function initGo2SpatialGallery() {
+  // Apply interleaving if enabled
+  const demos = interleaveByLocation(go2SpatialDemoData);
+  
   for (let page = 0; page < totalGo2SpatialPages; page++) {
     const pageElement = document.getElementById(`go2SpatialPage${page + 1}`);
     const startIdx = page * go2SpatialDemosPerPage;
     
     for (let i = startIdx; i < startIdx + go2SpatialDemosPerPage; i++) {
-      if (i < go2SpatialDemoData.length) {
-        const demo = go2SpatialDemoData[i];
+      if (i < demos.length) {
+        const demo = demos[i];
         const demoCell = createDemoCell(demo, 'go2', 'spatial');
         pageElement.appendChild(demoCell);
       }
@@ -383,11 +561,38 @@ function initGo2SpatialGallery() {
 async function loadInstructionData(demo, robot = 'car', type = 'ori') {
   try {
     const basePath = `./static/instructions/${robot}/${type}/${demo.folder}`;
+    const instructionPath = `${basePath}/instruction.txt`;
     const targetPath = `${basePath}/target_object.txt`;
     const attributePath = `${basePath}/self_attribute.txt`;
     const spatialPath = `${basePath}/spatial_condition.txt`;
     
-    // Fetch all files
+    // Try to fetch the complete instruction first
+    const instructionResponse = await fetch(instructionPath).catch(() => null);
+    
+    if (instructionResponse && instructionResponse.ok) {
+      const fullInstruction = await instructionResponse.text();
+      const cleanInstruction = fullInstruction.trim().replace(/%$/, '');
+      
+      // Also fetch individual components for highlighting
+      const [targetResponse, attributeResponse, spatialResponse] = await Promise.all([
+        fetch(targetPath).catch(() => null),
+        fetch(attributePath).catch(() => null),
+        fetch(spatialPath).catch(() => null)
+      ]);
+      
+      const target = targetResponse && targetResponse.ok ? await targetResponse.text() : '';
+      const attribute = attributeResponse && attributeResponse.ok ? await attributeResponse.text() : '';
+      const spatial = spatialResponse && spatialResponse.ok ? await spatialResponse.text() : '';
+      
+      return {
+        fullInstruction: cleanInstruction,
+        target: target.trim().replace(/%$/, ''),
+        attribute: attribute.trim().replace(/%$/, ''),
+        spatial: spatial.trim().replace(/%$/, '')
+      };
+    }
+    
+    // Fallback: Fetch all files separately if instruction.txt doesn't exist
     const [targetResponse, attributeResponse, spatialResponse] = await Promise.all([
       fetch(targetPath),
       fetch(attributePath).catch(() => null),
@@ -408,13 +613,14 @@ async function loadInstructionData(demo, robot = 'car', type = 'ori') {
     const cleanSpatial = spatial.trim().replace(/%$/, '');
     
     return {
+      fullInstruction: null,
       target: cleanTarget,
       attribute: cleanAttribute,
       spatial: cleanSpatial
     };
   } catch (error) {
     console.error(`Failed to load instruction for ${demo.folder}:`, error);
-    return { target: demo.name, attribute: '', spatial: '' };
+    return { fullInstruction: null, target: demo.name, attribute: '', spatial: '' };
   }
 }
 
@@ -424,7 +630,30 @@ function buildInstructionText(data) {
     return 'No instruction available';
   }
   
-  // Build the instruction text: "Find the [attribute] target [spatial]"
+  // If we have the full instruction from instruction.txt, use it and apply highlighting
+  if (data.fullInstruction) {
+    let highlightedText = data.fullInstruction;
+    
+    // Apply highlighting to each component if it exists in the instruction
+    if (data.attribute) {
+      const attrRegex = new RegExp(`(${escapeRegExp(data.attribute)})`, 'gi');
+      highlightedText = highlightedText.replace(attrRegex, '<span class="highlight-attribute">$1</span>');
+    }
+    
+    if (data.target) {
+      const targetRegex = new RegExp(`(${escapeRegExp(data.target)})`, 'gi');
+      highlightedText = highlightedText.replace(targetRegex, '<span class="highlight-target">$1</span>');
+    }
+    
+    if (data.spatial) {
+      const spatialRegex = new RegExp(`(${escapeRegExp(data.spatial)})`, 'gi');
+      highlightedText = highlightedText.replace(spatialRegex, '<span class="highlight-spatial">$1</span>');
+    }
+    
+    return highlightedText;
+  }
+  
+  // Fallback: Build the instruction text: "Find the [attribute] target [spatial]"
   let parts = ['Find the'];
   
   // Add attribute if exists (red highlight)
@@ -442,6 +671,12 @@ function buildInstructionText(data) {
   
   return parts.join(' ') + '.';
 }
+
+// Helper function to escape special regex characters
+function escapeRegExp(string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 
 // Create a demo cell with video pair (no mini controls)
 function createDemoCell(demo, robot = 'car', type = 'ori') {
@@ -1228,3 +1463,4 @@ document.addEventListener('keydown', function(event) {
     closeVideoModal();
   }
 });
+

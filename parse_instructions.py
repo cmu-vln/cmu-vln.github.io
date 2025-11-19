@@ -137,7 +137,7 @@ def main():
         return
     
     # Define the base path
-    instructions_base = Path("./static/instructions/go2/ori")
+    instructions_base = Path("./static/instructions/go2/spatial")
     
     if not instructions_base.exists():
         print(f"ERROR: Directory {instructions_base} does not exist!")
