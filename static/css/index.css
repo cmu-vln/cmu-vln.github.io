@@ -509,16 +509,21 @@ body {
 .video-slides {
   position: relative;
   width: 100%;
+  overflow: hidden;
 }
 
 /* Individual video slide */
-.video-slide {
-  display: none;
+.simple-video-carousel .video-slide {
+  display: none !important;
   width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
-.video-slide.active {
-  display: block;
+.simple-video-carousel .video-slide.active {
+  display: block !important;
+  position: relative;
 }
 
 /* Enlarge the video container */

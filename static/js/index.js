@@ -99,6 +99,7 @@ function changeVideoSlide(direction) {
   
   // Remove active class from current slide
   slides[currentVideoSlide].classList.remove('active');
+  slides[currentVideoSlide].style.display = 'none';
   dots[currentVideoSlide].classList.remove('active');
   
   // Calculate new slide index
@@ -113,6 +114,7 @@ function changeVideoSlide(direction) {
   
   // Add active class to new slide
   slides[currentVideoSlide].classList.add('active');
+  slides[currentVideoSlide].style.display = 'block';
   dots[currentVideoSlide].classList.add('active');
 }
 
@@ -126,6 +128,7 @@ function goToVideoSlide(slideIndex) {
   
   // Remove active class from current slide
   slides[currentVideoSlide].classList.remove('active');
+  slides[currentVideoSlide].style.display = 'none';
   dots[currentVideoSlide].classList.remove('active');
   
   // Set new slide
@@ -133,7 +136,36 @@ function goToVideoSlide(slideIndex) {
   
   // Add active class to new slide
   slides[currentVideoSlide].classList.add('active');
+  slides[currentVideoSlide].style.display = 'block';
   dots[currentVideoSlide].classList.add('active');
+}
+
+// Initialize video carousel on page load
+function initVideoCarousel() {
+  const slides = document.querySelectorAll('.video-slide');
+  const dots = document.querySelectorAll('.carousel-dots .dot');
+  
+  // Ensure only first slide is visible
+  slides.forEach((slide, index) => {
+    if (index === 0) {
+      slide.classList.add('active');
+      slide.style.display = 'block';
+    } else {
+      slide.classList.remove('active');
+      slide.style.display = 'none';
+    }
+  });
+  
+  // Ensure only first dot is active
+  dots.forEach((dot, index) => {
+    if (index === 0) {
+      dot.classList.add('active');
+    } else {
+      dot.classList.remove('active');
+    }
+  });
+  
+  currentVideoSlide = 0;
 }
 
 var INTERP_BASE = "./static/interpolation/stacked";
@@ -235,6 +267,9 @@ function initLazyLoadVideos() {
 
 
 $(document).ready(function() {
+    // Initialize video carousel - ensure first slide is visible
+    initVideoCarousel();
+    
     // Load YouTube API for volume control
     loadYouTubeAPI();
     
