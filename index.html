@@ -166,6 +166,34 @@
     </div>
   </section>
 
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <div class="content">
+              <div class="text-image-container title is-3"
+                style="display: flex; align-items: center; justify-content: center;">
+                <img src="static/images/light-bulb.png" alt="示例图片" width="45" style="margin-right: 10px;">
+                <p style="margin: 0;">Contributions</p>
+              </div>
+              <ul>
+                <li style="text-align: left; margin-bottom: 15px;"><b>We propose a cross-embodiment system that incrementally builds a multi-layer representation of the environment—including room, viewpoint, and object layers—enabling the VLM to make more informed decisions.</b></li>
+                <li style="text-align: left; margin-bottom: 15px;"><b>We design an efficient two-stage navigation policy
+                    based on this representation, combining high-level planning guided by the VLM's reasoning and
+                    low-level exploration with VLM's assistance.</b></li>
+                <li style="text-align: left; margin-bottom: 15px;"><b>Our system not only supports standard object navigation but also enables conditional object navigation—such as navigation conditioned on object attributes or spatial relations—through its multi-layer representation.</b></li>
+                <li style="text-align: left; margin-bottom: 0px;"><b>We conducted extensive real-world evaluations, including three long-range tests spanning an entire building floor and 69 unit tests conducted within multi-room environments (51 on wheeled robots and 18 on quadrupeds).
+                  <!-- To the best of our knowledge, this is the first cross-embodiment system capable of efficiently completing object navigation tasks at building-floor scale. -->
+                </b></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <!-- Paper video carousel. -->
@@ -227,7 +255,7 @@
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/wheel robot.png" alt="Wheeled Robot" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Wheeled Robot: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">Click any video to view in detail</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">35 demos -  demos - Click any video to view in detail</p>
         
         <!-- Gallery Container -->
         <div class="gallery-container">
@@ -277,7 +305,7 @@
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/wheel robot.png" alt="Wheeled Robot" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Wheeled Robot: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span> with <span style="color: #e74c3c; font-weight: 700;">Self-attribute Condition</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">Click any video to view in detail</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">10 demos - Click any video to view in detail</p>
         
         <!-- Gallery Container for Self -->
         <div class="gallery-container">
@@ -322,7 +350,7 @@
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/wheel robot.png" alt="Wheeled Robot" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Wheeled Robot: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span> with <span style="color: #3498db; font-weight: 700;">Spatial Condition</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">Click any video to view in detail</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">6 demos - Click any video to view in detail</p>
         <!-- Gallery Container for Spatial -->
         <div class="gallery-container">
           <div class="gallery-slider" id="gallerySpatialSlider">
@@ -345,7 +373,7 @@
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/go2.png" alt="Quadruped" style="height: 1.4em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Quadruped: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">Click any video to view in detail</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">7 demos - Click any video to view in detail</p>
         
         <!-- Gallery Container for Go2 Ori -->
         <div class="gallery-container">
@@ -385,7 +413,7 @@
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/go2.png" alt="Quadruped" style="height: 1.5em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Quadruped: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span> with <span style="color: #e74c3c; font-weight: 700;">Self-attribute Condition</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">Click any video to view in detail</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">6 demos - Click any video to view in detail</p>
         
         <!-- Gallery Container for Go2 Self -->
         <div class="gallery-container">
@@ -425,7 +453,7 @@
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/go2.png" alt="Quadruped" style="height: 1.5em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Quadruped: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span> with <span style="color: #3498db; font-weight: 700;">Spatial Condition</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">Click any video to view in detail</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">5 demos - Click any video to view in detail</p>
         
         <!-- Gallery Container for Go2 Spatial -->
         <div class="gallery-container">
@@ -465,7 +493,7 @@
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/humannoid.png" alt="Humanoid" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Humanoid: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">Click any video to view in detail</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;"> demos - Click any video to view in detail</p>
         <p class="has-text-centered" style="margin-top: 1.0rem; margin-bottom: 0.5rem; color: #ff0000; font-size: 1.8rem; font-weight: 600;">Coming Soon!</p>
         
       </div>
