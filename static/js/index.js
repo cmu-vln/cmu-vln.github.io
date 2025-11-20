@@ -1,47 +1,7 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
-// Configuration: Shuffle videos within each section
-const SHUFFLE_VIDEOS = true; // Set to true to interleave by location, false to keep original order
-
-// Function to extract location/scene from demo folder name
-function extractLocation(folderName) {
-  // Extract the location prefix (e.g., "frc", "katia", "nsh", "gates", "hci")
-  const match = folderName.match(/bagfile_([^_]+)/);
-  return match ? match[1] : 'unknown';
-}
-
-// Function to interleave demos from different locations across pages
-function interleaveByLocation(array) {
-  if (!SHUFFLE_VIDEOS) return array;
-  
-  // Group demos by location
-  const locationGroups = {};
-  array.forEach((demo, index) => {
-    const location = extractLocation(demo.folder);
-    if (!locationGroups[location]) {
-      locationGroups[location] = [];
-    }
-    locationGroups[location].push({ demo, originalIndex: index });
-  });
-  
-  // Get all location keys and sort them for consistency
-  const locations = Object.keys(locationGroups).sort();
-  
-  // Interleave demos from different locations
-  const interleaved = [];
-  let maxGroupSize = Math.max(...locations.map(loc => locationGroups[loc].length));
-  
-  // Round-robin through locations
-  for (let i = 0; i < maxGroupSize; i++) {
-    for (const location of locations) {
-      if (i < locationGroups[location].length) {
-        interleaved.push(locationGroups[location][i].demo);
-      }
-    }
-  }
-  
-  return interleaved;
-}
+// Configuration: Use manual order (no automatic shuffling)
+const SHUFFLE_VIDEOS = false; // Set to false to use manual order specified in demo data arrays
 
 // Simple Video Carousel Variables
 let currentVideoSlide = 0;
@@ -363,32 +323,31 @@ $(document).ready(function() {
 
 // Demo data - 23 demos from car/ori
 const demoData = [
-  // FRC demos (6)
   { name: "FRC Cabinet 1", folder: "bagfile_frc_cabinet_1" },
-  { name: "FRC Cabinet 2", folder: "bagfile_frc_cabinet_2" },
-  { name: "FRC Sofa 1", folder: "bagfile_frc_sofa_1" },
-  { name: "FRC Sofa 2", folder: "bagfile_frc_sofa_2" },
-  { name: "FRC Sofa 3", folder: "bagfile_frc_sofa_3" },
-  { name: "FRC Whiteboard 1", folder: "bagfile_frc_whiteboard_1" },
-  
-  // Katia demos (7)
-  { name: "Katia Cabinet 1", folder: "bagfile_katia_cabinet_1" },
-  { name: "Katia Ref 1", folder: "bagfile_katia_ref_1" },
-  { name: "Katia Ref 2", folder: "bagfile_katia_ref_2" },
-  { name: "Katia Sofa 1", folder: "bagfile_katia_sofa_1" },
   { name: "Katia Sofa 2", folder: "bagfile_katia_sofa_2" },
-  { name: "Katia Trash Can 1", folder: "bagfile_katia_trash_can_1" },
-  { name: "Katia Whiteboard 1", folder: "bagfile_katia_whiteboard_1" },
-  
-  // NSH demos (10)
-  { name: "Katia Whiteboard 2", folder: "bagfile_katia_whiteboard_2" },
+  { name: "Katia Ref 2", folder: "bagfile_katia_ref_2" },
   { name: "NSH Oven 1", folder: "bagfile_nsh_oven_1" },
+  { name: "Katia Cabinet 1", folder: "bagfile_katia_cabinet_1" },
+  { name: "Katia Sofa 1", folder: "bagfile_katia_sofa_1" },
+
+  // FRC demos (6)
+  { name: "FRC Cabinet 2", folder: "bagfile_frc_cabinet_2" },
+  { name: "Katia Ref 1", folder: "bagfile_katia_ref_1" },
   { name: "NSH Oven 2", folder: "bagfile_nsh_oven_2" },
+  { name: "Katia Trash Can 1", folder: "bagfile_katia_trash_can_1" },
   { name: "NSH Oven 3", folder: "bagfile_nsh_oven_3" },
+  { name: "FRC Sofa 1", folder: "bagfile_frc_sofa_1" },
+
+  { name: "FRC Sofa 2", folder: "bagfile_frc_sofa_2" },
+  { name: "Katia Whiteboard 1", folder: "bagfile_katia_whiteboard_1" },
   { name: "NSH Ref 1", folder: "bagfile_nsh_ref_1" },
+  { name: "Katia Whiteboard 2", folder: "bagfile_katia_whiteboard_2" },
   { name: "NSH Ref 2", folder: "bagfile_nsh_ref_2" },
+  { name: "FRC Sofa 3", folder: "bagfile_frc_sofa_3" },
+
   { name: "NSH Sofa 2", folder: "bagfile_nsh_sofa_2" },
   { name: "NSH Sofa 3", folder: "bagfile_nsh_sofa_3" },
+  { name: "FRC Whiteboard 1", folder: "bagfile_frc_whiteboard_1" },
   { name: "NSH Whiteboard 1", folder: "bagfile_nsh_whiteboard_1" },
   { name: "NSH Whiteboard 2", folder: "bagfile_nsh_whiteboard_2" }
 ];
@@ -396,55 +355,60 @@ const demoData = [
 // Self attribute demo data - first 8 demos from car/self
 const selfDemoData = [
   { name: "FRC Self Chair 1", folder: "bagfile_frc_self_chair_1" },
-  { name: "FRC Self Chair 2", folder: "bagfile_frc_self_chair_2" },
-  { name: "FRC Self Monitor Open 1", folder: "bagfile_frc_self_monitor_open_1" },
-  { name: "FRC Self Monitor Open 2", folder: "bagfile_frc_self_monitor_open_2" },
-  { name: "FRC Self Trash Can Blue 1", folder: "bagfile_frc_self_trash_can_blue_1" },
-  { name: "FRC Self Trash Can Blue 2", folder: "bagfile_frc_self_trash_can_blue_2" },
+  { name: "NSH 3 Self Chair Black 2", folder: "bagfile_nsh_3_self_chair_black_2" },
   { name: "FRC Self Whiteboard 1", folder: "bagfile_frc_self_whiteboard_1" },
+  { name: "FRC Self Trash Can Blue 1", folder: "bagfile_frc_self_trash_can_blue_1" },
+  
+  { name: "FRC Self Monitor Open 1", folder: "bagfile_frc_self_monitor_open_1" },
+  { name: "FRC Self Chair 2", folder: "bagfile_frc_self_chair_2" },
   { name: "FRC Self Whiteboard 2", folder: "bagfile_frc_self_whiteboard_2" },
   { name: "NSH 3 Self Chair Black 1", folder: "bagfile_nsh_3_self_chair_black_1" },
-  { name: "NSH 3 Self Chair Black 2", folder: "bagfile_nsh_3_self_chair_black_2" }
+
+  { name: "FRC Self Monitor Open 2", folder: "bagfile_frc_self_monitor_open_2" },
+  { name: "FRC Self Trash Can Blue 2", folder: "bagfile_frc_self_trash_can_blue_2" },
 ];
 
 // Spatial condition demo data - all 6 demos from car/spatial
 const spatialDemoData = [
   { name: "FRC Spatial Bag Hang 1", folder: "bagfile_frc_spatial_bag_hang_1" },
   { name: "FRC Spatial Bag Sofa 1", folder: "bagfile_frc_spatial_bag_sofa_1" },
-  { name: "FRC Spatial Desk 1", folder: "bagfile_frc_spatial_desk_1" },
   { name: "FRC Spatial Person 1", folder: "bagfile_frc_spatial_person_1" },
   { name: "FRC Spatial Person 2", folder: "bagfile_frc_spatial_person_2" },
-  { name: "FRC Spatial Person Chair 1", folder: "bagfile_frc_spatial_person_chair_1" }
+  { name: "FRC Spatial Person Chair 1", folder: "bagfile_frc_spatial_person_chair_1" },
+  { name: "FRC Spatial Desk 1", folder: "bagfile_frc_spatial_desk_1" },
 ];
 
 // GO2 Original demo data - 7 demos from go2/ori
 const go2OriDemoData = [
   { name: "FRC 1th Coffee 1", folder: "bagfile_frc_1th_coffee_1" },
-  { name: "FRC 1th Oven 1", folder: "bagfile_frc_1th_oven_1" },
-  { name: "FRC 1th Ref 1", folder: "bagfile_frc_1th_ref_1" },
   { name: "FRC 1th TV Monitor 1", folder: "bagfile_frc_1th_tv_monitor_1" },
-  { name: "FRC Sofa 1", folder: "bagfile_frc_sofa_1" },
   { name: "FRC Whiteboard 1", folder: "bagfile_frc_whiteboard_1" },
-  { name: "Gates Plant 1", folder: "bagfile_gates_plant_1" }
+  { name: "FRC 1th Ref 1", folder: "bagfile_frc_1th_ref_1" },
+
+  { name: "Gates Plant 1", folder: "bagfile_gates_plant_1" },
+  { name: "FRC 1th Oven 1", folder: "bagfile_frc_1th_oven_1" },
+  { name: "FRC Sofa 1", folder: "bagfile_frc_sofa_1" },
 ];
 
 // GO2 Self attribute demo data - 6 demos from go2/self
 const go2SelfDemoData = [
+  { name: "HCI Self Chair 1", folder: "bagfile_hci_self_chair_1" },
+  { name: "Gates Self Chair 2", folder: "bagfile_gates_self_chair_2" },
   { name: "FRC 1th Self Sofa 1", folder: "bagfile_frc_1th_self_sofa_1" },
   { name: "FRC Self Trash Can 1", folder: "bagfile_frc_self_trash_can_1" },
+
   { name: "Gates Self Chair 1", folder: "bagfile_gates_self_chair_1" },
-  { name: "Gates Self Chair 2", folder: "bagfile_gates_self_chair_2" },
-  { name: "HCI Self Chair 1", folder: "bagfile_hci_self_chair_1" },
-  { name: "HCI Self Trash Can 1", folder: "bagfile_hci_self_trash_can_1" }
+  { name: "HCI Self Trash Can 1", folder: "bagfile_hci_self_trash_can_1" },
 ];
 
 // GO2 Spatial condition demo data - 5 demos from go2/spatial
 const go2SpatialDemoData = [
+  { name: "HCI Spatial Person 1", folder: "bagfile_hci_spatial_person_1" },
   { name: "FRC 1th Spatial Person", folder: "bagfile_frc_1th_spatial_person" },
   { name: "FRC Spatial Bag 1", folder: "bagfile_frc_spatial_bag_1" },
+  { name: "HCI Spatial Person 2", folder: "bagfile_hci_spatial_person_2" },
+
   { name: "FRC Spatial Person 1", folder: "bagfile_frc_spatial_person_1" },
-  { name: "HCI Spatial Person 1", folder: "bagfile_hci_spatial_person_1" },
-  { name: "HCI Spatial Person 2", folder: "bagfile_hci_spatial_person_2" }
 ];
 
 let currentGalleryPage = 0;
@@ -469,8 +433,8 @@ const go2SpatialDemosPerPage = 4;
 
 // Initialize demo gallery (original)
 function initDemoGallery() {
-  // Apply interleaving if enabled
-  const demos = interleaveByLocation(demoData);
+  // Use demos in the order specified in demoData array (no interleaving)
+  const demos = demoData;
   
   // Fill each page with demos
   for (let page = 0; page < totalPages; page++) {
@@ -497,8 +461,8 @@ function initDemoGallery() {
 
 // Initialize self attribute gallery
 function initSelfGallery() {
-  // Apply interleaving if enabled
-  const demos = interleaveByLocation(selfDemoData);
+  // Use demos in the order specified in selfDemoData array (no interleaving)
+  const demos = selfDemoData;
   
   for (let page = 0; page < totalSelfPages; page++) {
     const pageElement = document.getElementById(`selfPage${page + 1}`);
@@ -518,8 +482,8 @@ function initSelfGallery() {
 
 // Initialize spatial condition gallery
 function initSpatialGallery() {
-  // Apply interleaving if enabled
-  const demos = interleaveByLocation(spatialDemoData);
+  // Use demos in the order specified in spatialDemoData array (no interleaving)
+  const demos = spatialDemoData;
   
   const pageElement = document.getElementById('spatialPage1');
   
@@ -531,8 +495,8 @@ function initSpatialGallery() {
 
 // Initialize go2 ori gallery
 function initGo2OriGallery() {
-  // Apply interleaving if enabled
-  const demos = interleaveByLocation(go2OriDemoData);
+  // Use demos in the order specified in go2OriDemoData array (no interleaving)
+  const demos = go2OriDemoData;
   
   for (let page = 0; page < totalGo2OriPages; page++) {
     const pageElement = document.getElementById(`go2OriPage${page + 1}`);
@@ -552,8 +516,8 @@ function initGo2OriGallery() {
 
 // Initialize go2 self gallery
 function initGo2SelfGallery() {
-  // Apply interleaving if enabled
-  const demos = interleaveByLocation(go2SelfDemoData);
+  // Use demos in the order specified in go2SelfDemoData array (no interleaving)
+  const demos = go2SelfDemoData;
   
   for (let page = 0; page < totalGo2SelfPages; page++) {
     const pageElement = document.getElementById(`go2SelfPage${page + 1}`);
@@ -573,8 +537,8 @@ function initGo2SelfGallery() {
 
 // Initialize go2 spatial gallery
 function initGo2SpatialGallery() {
-  // Apply interleaving if enabled
-  const demos = interleaveByLocation(go2SpatialDemoData);
+  // Use demos in the order specified in go2SpatialDemoData array (no interleaving)
+  const demos = go2SpatialDemoData;
   
   for (let page = 0; page < totalGo2SpatialPages; page++) {
     const pageElement = document.getElementById(`go2SpatialPage${page + 1}`);
