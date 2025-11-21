@@ -83,32 +83,42 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">Object Navigation</h1>
-            <!-- <div class="is-size-5 publication-authors">
+            <div class="is-size-5 publication-authors">
               <span class="author-block">
-                <a href="https://keunhong.com">Keunhong Park</a><sup>1</sup>,</span>
+                <a href="https://zwandering.github.io/">Haokun Zhu</a><sup>1</sup>,</span>
               <span class="author-block">
-                <a href="https://utkarshsinha.com">Utkarsh Sinha</a><sup>2</sup>,</span>
+                <a href="https://github.com/igzat1no">Zongtai Li</a><sup>1</sup>,</span>
               <span class="author-block">
-                <a href="https://jonbarron.info">Jonathan T. Barron</a><sup>2</sup>,
+                <a href="https://zihan-liu.replit.app/">Zihan Liu</a><sup>2</sup>,
               </span>
               <span class="author-block">
-                <a href="http://sofienbouaziz.com">Sofien Bouaziz</a><sup>2</sup>,
+                <a href="https://sites.google.com/nyu.edu/kevinguos-profolio/">Kevin Guo</a><sup>1</sup>,
               </span>
               <span class="author-block">
-                <a href="https://www.danbgoldman.com">Dan B Goldman</a><sup>2</sup>,
+                <a href="https://yuxin916.github.io/">Yuxin Cai</a><sup>3</sup>,
               </span>
               <span class="author-block">
-                <a href="https://homes.cs.washington.edu/~seitz/">Steven M. Seitz</a><sup>1,2</sup>,
+                <a href="https://gfchen01.cc/">Guofei Chen</a><sup>1</sup>,
               </span>
               <span class="author-block">
-                <a href="http://www.ricardomartinbrualla.com">Ricardo Martin-Brualla</a><sup>2</sup>
+                <a href="https://scholar.google.com/citations?user=UKVs2CEAAAAJ&hl=en">Chen Lv</a><sup>3</sup>
+              </span>
+              <span class="author-block">
+                <a href="http://www.wangwenshan.com/">Wenshan Wang</a><sup>1</sup>
+              </span>
+              <span class="author-block">
+                <a href="https://www.cs.cmu.edu/~jeanoh/">Jean Oh</a><sup>1</sup>
+              </span>
+              <span class="author-block">
+                <a href="https://frc.ri.cmu.edu/~zhangji/">Ji Zhang</a><sup>1</sup>
               </span>
             </div>
 
             <div class="is-size-5 publication-authors">
-              <span class="author-block"><sup>1</sup>University of Washington,</span>
-              <span class="author-block"><sup>2</sup>Google Research</span>
-            </div> -->
+              <span class="author-block"><sup>1</sup>Carnegie Mellon University, </span>
+              <span class="author-block"><sup>2</sup>New York University, </span>
+              <span class="author-block"><sup>3</sup>Nanyang Technological University</span>
+            </div>
 
             <div class="column has-text-centered">
               <div class="publication-links">
@@ -178,7 +188,7 @@
                 <p style="margin: 0;">Contributions</p>
               </div>
               <ul>
-                <li style="text-align: left; margin-bottom: 15px;"><b>We propose a cross-embodiment system that incrementally builds a multi-layer representation of the environment—including room, viewpoint, and object layers—enabling the VLM to make more informed decisions.</b></li>
+                <li style="text-align: left; margin-bottom: 15px;"><b>We propose a cross-embodiment system—supporting wheeled robots, quadrupeds, and humanoids—that incrementally builds a multi-layer representation of the environment, including room, viewpoint, and object layers, enabling the VLM to make more informed decisions during the object navigation.</b></li>
                 <li style="text-align: left; margin-bottom: 15px;"><b>We design an efficient two-stage navigation policy
                     based on this representation, combining high-level planning guided by the VLM's reasoning and
                     low-level exploration with VLM's assistance.</b></li>
@@ -193,62 +203,130 @@
     </div>
   </section>
 
-  <section class="section">
-    <div class="container">
-      <!-- Paper video carousel. -->
-      <div class="columns is-centered has-text-centered">
-        <div class="column">
-          <h2 class="title is-3">
-            <img src="static/images/wheel robot.png" alt="Wheeled Robot" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Wheeled Robot: <span style="color: #5cb85c; font-weight: 700;">Long-range</span> <span style="color: #f39c12; font-weight: 700;">Object Navigation</span>
-          </h2>
-          
-          <!-- Simple video carousel container -->
-          <div class="simple-video-carousel">
-            <!-- Video slides -->
-            <div class="video-slides">
-              <div class="video-slide active">
-                <div class="publication-video">
-                  <iframe id="youtube-player-1" src="https://www.youtube.com/embed/2xZOOogoFrA?enablejsapi=1&si=lXfWPmUaa7o1NkFD" frameborder="0"
-                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  <section class="hero is-small is-light">
+    <div class="hero-body">
+      <div class="container">
+        <!-- Paper video carousel. -->
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <h2 class="title is-3">
+              <img src="static/images/wheel robot.png" alt="Wheeled Robot" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Wheeled Robot: <span style="color: #5cb85c; font-weight: 700;">Long-range</span> <span style="color: #f39c12; font-weight: 700;">Object Navigation</span>
+            </h2>
+            
+            <!-- Simple video carousel container -->
+            <div class="simple-video-carousel">
+              <!-- Video slides -->
+              <div class="video-slides">
+                <div class="video-slide active">
+                  <div class="publication-video">
+                    <iframe id="youtube-player-1" src="https://www.youtube.com/embed/2xZOOogoFrA?enablejsapi=1&si=lXfWPmUaa7o1NkFD" frameborder="0"
+                      allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+                  <!-- Storyboard/Thumbnail Section -->
+                  <div class="video-storyboard">
+                    <div class="storyboard-title">Key Moments <span class="storyboard-subtitle">- Click image to jump • Click 🔍 to zoom</span></div>
+                    <div class="storyboard-frames">
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video1_frame1.jpg" alt="Frame 1" onerror="this.src='static/images/storyboard/roboloundge/00:12.png'">
+                        <span class="frame-time">0:12</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video1_frame2.jpg" alt="Frame 2" onerror="this.src='static/images/storyboard/roboloundge/00:17.png'">
+                        <span class="frame-time">0:17</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video1_frame3.jpg" alt="Frame 3" onerror="this.src='static/images/storyboard/roboloundge/00:46.png'">
+                        <span class="frame-time">0:46</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video1_frame4.jpg" alt="Frame 4" onerror="this.src='static/images/storyboard/roboloundge/01:22.png'">
+                        <span class="frame-time">1:22</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="video-slide">
+                  <div class="publication-video">
+                    <iframe id="youtube-player-2" src="https://www.youtube.com/embed/hmZi6mrteDs?enablejsapi=1&si=Rtl2YNHNIg_ZATwU" frameborder="0"
+                      allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+                  <!-- Storyboard/Thumbnail Section -->
+                  <div class="video-storyboard">
+                    <div class="storyboard-title">Key Moments <span class="storyboard-subtitle">- Click image to jump • Click 🔍 to zoom</span></div>
+                    <div class="storyboard-frames">
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video2_frame1.jpg" alt="Frame 1" onerror="this.src='static/images/storyboard/gates_4th/00:30.png'">
+                        <span class="frame-time">0:30</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video2_frame2.jpg" alt="Frame 2" onerror="this.src='static/images/storyboard/gates_4th/00:54.png'">
+                        <span class="frame-time">0:54</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video2_frame3.jpg" alt="Frame 3" onerror="this.src='static/images/storyboard/gates_4th/01:13.png'">
+                        <span class="frame-time">1:13</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video2_frame4.jpg" alt="Frame 4" onerror="this.src='static/images/storyboard/gates_4th/02:13.png'">
+                        <span class="frame-time">2:13</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="video-slide">
+                  <div class="publication-video">
+                    <iframe id="youtube-player-3" src="https://www.youtube.com/embed/jeAsrCG7rCY?enablejsapi=1&si=BqW449obJeLX58Ub" frameborder="0"
+                      allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                  </div>
+                  <!-- Storyboard/Thumbnail Section -->
+                  <div class="video-storyboard">
+                    <div class="storyboard-title">Key Moments <span class="storyboard-subtitle">- Click image to jump • Click 🔍 to zoom</span></div>
+                    <div class="storyboard-frames">
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video3_frame1.jpg" alt="Frame 1" onerror="this.src='static/images/storyboard/gates_5th/00:19.png'">
+                        <span class="frame-time">0:19</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video3_frame2.jpg" alt="Frame 2" onerror="this.src='static/images/storyboard/gates_5th/00:35.png'">
+                        <span class="frame-time">0:35</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video3_frame3.jpg" alt="Frame 3" onerror="this.src='static/images/storyboard/gates_5th/00:54.png'">
+                        <span class="frame-time">0:54</span>
+                      </div>
+                      <div class="storyboard-frame">
+                        <img src="static/images/storyboard/video3_frame4.jpg" alt="Frame 4" onerror="this.src='static/images/storyboard/gates_5th/01:39.png'">
+                        <span class="frame-time">1:39</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="video-slide">
-                <div class="publication-video">
-                  <iframe id="youtube-player-2" src="https://www.youtube.com/embed/hmZi6mrteDs?enablejsapi=1&si=Rtl2YNHNIg_ZATwU" frameborder="0"
-                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                </div>
-              </div>
-              <div class="video-slide">
-                <div class="publication-video">
-                  <iframe id="youtube-player-3" src="https://www.youtube.com/embed/jeAsrCG7rCY?enablejsapi=1&si=BqW449obJeLX58Ub" frameborder="0"
-                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                </div>
+              
+              <!-- Navigation arrows -->
+              <button class="carousel-nav carousel-prev" onclick="changeVideoSlide(-1)">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="carousel-nav carousel-next" onclick="changeVideoSlide(1)">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              
+              <!-- Dots indicator -->
+              <div class="carousel-dots">
+                <span class="dot active" onclick="goToVideoSlide(0)"></span>
+                <span class="dot" onclick="goToVideoSlide(1)"></span>
+                <span class="dot" onclick="goToVideoSlide(2)"></span>
               </div>
             </div>
             
-            <!-- Navigation arrows -->
-            <button class="carousel-nav carousel-prev" onclick="changeVideoSlide(-1)">
-              <i class="fas fa-chevron-left"></i>
-            </button>
-            <button class="carousel-nav carousel-next" onclick="changeVideoSlide(1)">
-              <i class="fas fa-chevron-right"></i>
-            </button>
-            
-            <!-- Dots indicator -->
-            <div class="carousel-dots">
-              <span class="dot active" onclick="goToVideoSlide(0)"></span>
-              <span class="dot" onclick="goToVideoSlide(1)"></span>
-              <span class="dot" onclick="goToVideoSlide(2)"></span>
-            </div>
           </div>
-          
         </div>
+        <!--/ Paper video carousel. -->
       </div>
-      <!--/ Paper video carousel. -->
     </div>
   </section>
 
-  <section class="hero is-light is-small">
+  <section class="hero is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
@@ -298,7 +376,7 @@
   </section>
 
   <!-- Self-attribute Gallery -->
-  <section class="hero is-small">
+  <section class="hero is-light is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
@@ -343,7 +421,7 @@
   </section>
 
   <!-- Spatial Condition Gallery -->
-  <section class="hero is-light is-small">
+  <section class="hero is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
@@ -366,7 +444,7 @@
   </section>
 
   <!-- GO2 Original Gallery -->
-  <section class="hero is-small">
+  <section class="hero is-light is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
@@ -406,7 +484,7 @@
   </section>
 
   <!-- GO2 Self-attribute Gallery -->
-  <section class="hero is-light is-small">
+  <section class="hero is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
@@ -446,7 +524,7 @@
   </section>
 
   <!-- GO2 Spatial Condition Gallery -->
-  <section class="hero is-small">
+  <section class="hero is-light is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
@@ -486,7 +564,7 @@
   </section>
 
   <!-- Humannoid Demo Gallery -->
-  <section class="hero is-light is-small">
+  <section class="hero is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
@@ -509,6 +587,14 @@
       <div class="modal-video-pair" id="modalVideoPair">
         <!-- Videos with individual controls will be inserted here -->
       </div>
+    </div>
+  </div>
+
+  <!-- Image Lightbox Modal for Storyboard -->
+  <div id="imageLightbox" class="image-lightbox">
+    <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <div class="lightbox-content">
+      <img id="lightboxImage" class="lightbox-image" src="" alt="Enlarged view">
     </div>
   </div>
 

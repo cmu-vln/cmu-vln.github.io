@@ -1460,6 +1460,150 @@ document.addEventListener('click', function(event) {
 document.addEventListener('keydown', function(event) {
   if (event.key === 'Escape') {
     closeVideoModal();
+    closeLightbox();
   }
+});
+
+// Image Lightbox Functions for Storyboard
+function openLightbox(imageSrc) {
+  const lightbox = document.getElementById('imageLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  
+  lightboxImage.src = imageSrc;
+  lightbox.classList.add('active');
+  
+  // Prevent body scroll
+  document.body.style.overflow = 'hidden';
+}
+
+// Parse time string (e.g., "0:12" or "1:22") to seconds
+function parseTimeToSeconds(timeString) {
+  const parts = timeString.split(':');
+  if (parts.length === 2) {
+    const minutes = parseInt(parts[0], 10);
+    const seconds = parseInt(parts[1], 10);
+    return minutes * 60 + seconds;
+  }
+  return 0;
+}
+
+// Seek YouTube video to specific time
+function seekYouTubeVideo(videoSlide, timeSeconds) {
+  // Find the iframe in the video slide
+  const iframe = videoSlide.querySelector('iframe');
+  if (!iframe) {
+    console.error('No iframe found in video slide');
+    return;
+  }
+  
+  // Get the iframe ID or find the corresponding player
+  const iframeId = iframe.id;
+  const slideIndex = Array.from(document.querySelectorAll('.video-slide')).indexOf(videoSlide);
+  
+  // Try to use the YouTube player object if available
+  if (youtubePlayers[slideIndex] && youtubePlayers[slideIndex].seekTo) {
+    youtubePlayers[slideIndex].seekTo(timeSeconds, true);
+    youtubePlayers[slideIndex].playVideo();
+    console.log(`Seeking to ${timeSeconds}s using player object`);
+  } else {
+    // Fallback: use postMessage API
+    iframe.contentWindow.postMessage(JSON.stringify({
+      event: 'command',
+      func: 'seekTo',
+      args: [timeSeconds, true]
+    }), '*');
+    
+    // Also send play command
+    setTimeout(() => {
+      iframe.contentWindow.postMessage(JSON.stringify({
+        event: 'command',
+        func: 'playVideo',
+        args: []
+      }), '*');
+    }, 100);
+    
+    console.log(`Seeking to ${timeSeconds}s using postMessage`);
+  }
+}
+
+function closeLightbox() {
+  const lightbox = document.getElementById('imageLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  
+  lightbox.classList.remove('active');
+  lightboxImage.src = '';
+  
+  // Restore body scroll
+  document.body.style.overflow = 'auto';
+}
+
+// Close lightbox when clicking outside the image
+document.addEventListener('click', function(event) {
+  const lightbox = document.getElementById('imageLightbox');
+  if (event.target === lightbox) {
+    closeLightbox();
+  }
+});
+
+// Add click event to all storyboard images
+document.addEventListener('DOMContentLoaded', function() {
+  // Wait a bit for content to load, then attach handlers
+  setTimeout(function() {
+    const storyboardFrames = document.querySelectorAll('.storyboard-frame');
+    storyboardFrames.forEach(function(frame) {
+      const img = frame.querySelector('img');
+      const timeSpan = frame.querySelector('.frame-time');
+      
+      if (img && timeSpan) {
+        img.style.cursor = 'pointer';
+        frame.style.cursor = 'pointer';
+        
+        // Add zoom icon to the frame
+        const zoomIcon = document.createElement('span');
+        zoomIcon.className = 'frame-zoom-icon';
+        zoomIcon.innerHTML = '<i class="fas fa-search-plus"></i>';
+        zoomIcon.title = 'Click to enlarge image';
+        zoomIcon.style.pointerEvents = 'auto'; // Make sure it can receive clicks
+        zoomIcon.style.cursor = 'zoom-in';
+        frame.appendChild(zoomIcon);
+        
+        // Add click handler to zoom icon - enlarge image (FIRST, with higher priority)
+        zoomIcon.addEventListener('click', function(e) {
+          e.stopPropagation(); // CRITICAL: Stop event from bubbling to parent
+          e.preventDefault();
+          openLightbox(img.src);
+          console.log('Clicked zoom icon - opening lightbox');
+        });
+        
+        // Add click handler to the frame - seek video
+        frame.addEventListener('click', function(e) {
+          // Double check: if the click target is the zoom icon or its child, don't seek
+          if (e.target.classList.contains('frame-zoom-icon') || 
+              e.target.closest('.frame-zoom-icon')) {
+            console.log('Click was on zoom icon, not seeking video');
+            return; // Don't seek video
+          }
+          
+          e.stopPropagation();
+          
+          // Get the time from the frame-time span
+          const timeString = timeSpan.textContent.trim();
+          const timeSeconds = parseTimeToSeconds(timeString);
+          
+          // Find the parent video-slide
+          const videoSlide = frame.closest('.video-slide');
+          if (videoSlide) {
+            // Seek the YouTube video to this time
+            seekYouTubeVideo(videoSlide, timeSeconds);
+            console.log(`Clicked frame with time ${timeString} (${timeSeconds}s)`);
+          } else {
+            console.error('Could not find parent video-slide');
+          }
+        });
+      }
+    });
+    
+    console.log(`Attached click handlers to ${storyboardFrames.length} storyboard frames`);
+  }, 500);
 });
 

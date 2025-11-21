@@ -264,7 +264,8 @@ body {
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .gallery-nav button {
@@ -532,6 +533,111 @@ body {
   width: 100%;
 }
 
+/* Storyboard section below video */
+.video-storyboard {
+  margin-top: 1.0rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.storyboard-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #363636;
+  margin-top: -0.8rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  display: block;
+  width: 100%;
+  line-height: 1.5;
+}
+
+.storyboard-subtitle {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: #7a7a7a;
+  font-style: italic;
+  letter-spacing: normal;
+  display: inline;
+  vertical-align: middle;
+}
+
+.storyboard-frames {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.storyboard-frame {
+  flex: 1;
+  min-width: 150px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: white;
+}
+
+.storyboard-frame:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.storyboard-frame img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+  max-height: 180px;
+}
+
+.storyboard-frame:hover img {
+  transform: scale(1.05);
+}
+
+.frame-time {
+  position: absolute;
+  bottom: 4px;
+  /* right: 4px; */
+  left: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  padding: 0.4px 5px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  /* backdrop-filter: blur(4px); */
+}
+
+.frame-zoom-icon {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: auto;
+  cursor: zoom-in;
+  z-index: 10;
+}
+
+.storyboard-frame:hover .frame-zoom-icon {
+  opacity: 1;
+}
+
 /* Navigation arrows */
 .carousel-nav {
   position: absolute;
@@ -601,6 +707,14 @@ body {
     height: 45px;
     font-size: 1.3rem;
   }
+  
+  .storyboard-frame {
+    min-width: 130px;
+  }
+  
+  .storyboard-frame img {
+    max-height: 150px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -613,6 +727,18 @@ body {
     height: 40px;
     font-size: 1.2rem;
   }
+  
+  .storyboard-frames {
+    flex-wrap: wrap;
+  }
+  
+  .storyboard-frame {
+    min-width: calc(50% - 0.5rem);
+  }
+  
+  .storyboard-frame img {
+    max-height: 120px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -624,6 +750,97 @@ body {
     width: 35px;
     height: 35px;
     font-size: 1rem;
+  }
+  
+  .storyboard-frame {
+    min-width: 100%;
+  }
+  
+  .video-storyboard {
+    padding: 1rem;
+  }
+  
+  .storyboard-title {
+    font-size: 1.1rem;
+  }
+  
+  .storyboard-frame img {
+    max-height: 100px;
+  }
+}
+
+/* Image lightbox modal for storyboard images */
+.image-lightbox {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.95);
+  overflow: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-lightbox.active {
+  display: flex;
+}
+
+.lightbox-content {
+  position: relative;
+  margin: auto;
+  padding: 20px;
+  max-width: 95%;
+  max-height: 95%;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  color: white;
+  font-size: 3.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 10001;
+  line-height: 1;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.lightbox-close:hover {
+  color: #ff4444;
+  background: rgba(0, 0, 0, 0.8);
+  transform: scale(1.1);
+}
+
+@media screen and (max-width: 768px) {
+  .lightbox-close {
+    top: 1rem;
+    right: 1rem;
+    width: 50px;
+    height: 50px;
+    font-size: 2.5rem;
   }
 }
 
