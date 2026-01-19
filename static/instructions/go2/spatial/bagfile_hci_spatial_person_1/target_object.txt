@@ -1,1 +1,1 @@
-person red_chair
+person
