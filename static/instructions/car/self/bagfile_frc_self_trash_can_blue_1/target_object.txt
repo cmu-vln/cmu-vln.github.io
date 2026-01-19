@@ -1,1 +1,1 @@
-trash can
+trash_can

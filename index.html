@@ -577,16 +577,106 @@
     </div>
   </section>
 
-  <!-- Humannoid Demo Gallery -->
+  <!-- G1 Humanoid Original Gallery -->
   <section class="hero is-small">
     <div class="hero-body">
       <div class="container">
         <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
           <img src="static/images/humannoid.png" alt="Humanoid" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Humanoid: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span>
         </h2>
-        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;"> demos - Click any video to view in detail</p>
-        <p class="has-text-centered" style="margin-top: 1.0rem; margin-bottom: 0.5rem; color: #ff0000; font-size: 1.8rem; font-weight: 600;">Coming Soon!</p>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">7 demos - Click any video to view in detail</p>
         
+        <!-- Gallery Container for G1 Ori -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="galleryG1OriSlider">
+            <!-- Page 1: Demos 1-4 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="g1OriPage1"></div>
+            </div>
+            
+            <!-- Page 2: Demos 5-7 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="g1OriPage2"></div>
+            </div>
+          </div>
+          
+          <!-- Navigation -->
+          <div class="gallery-nav">
+            <button id="prevG1OriBtn" onclick="navigateG1OriGallery(-1)">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="gallery-page-indicator">
+              Page <span id="currentG1OriPage">1</span> of 2
+            </span>
+            <button id="nextG1OriBtn" onclick="navigateG1OriGallery(1)">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- G1 Self-attribute Gallery -->
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
+          <img src="static/images/humannoid.png" alt="Humanoid" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Humanoid: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span> with <span style="color: #e74c3c; font-weight: 700;">Self-attribute Condition</span>
+        </h2>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">5 demos - Click any video to view in detail</p>
+        
+        <!-- Gallery Container for G1 Self -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="galleryG1SelfSlider">
+            <!-- Page 1: Demos 1-4 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="g1SelfPage1"></div>
+            </div>
+            
+            <!-- Page 2: Demo 5 (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="g1SelfPage2"></div>
+            </div>
+          </div>
+          
+          <!-- Navigation -->
+          <div class="gallery-nav">
+            <button id="prevG1SelfBtn" onclick="navigateG1SelfGallery(-1)">
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="gallery-page-indicator">
+              Page <span id="currentG1SelfPage">1</span> of 2
+            </span>
+            <button id="nextG1SelfBtn" onclick="navigateG1SelfGallery(1)">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- G1 Spatial Condition Gallery -->
+  <section class="hero is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 2rem;">
+          <img src="static/images/humannoid.png" alt="Humanoid" style="height: 1.3em; vertical-align: text-bottom; margin-right: 0.3rem; display: inline-block;"> Humanoid: <span style="color: #f39c12; font-weight: 700;">Object Navigation</span> with <span style="color: #3498db; font-weight: 700;">Spatial Condition</span>
+        </h2>
+        <p class="has-text-centered" style="margin-top: -1.75rem; margin-bottom: -0.5rem; color: #7a7a7a; font-size: 0.9rem; font-style: italic;">2 demos - Click any video to view in detail</p>
+        
+        <!-- Gallery Container for G1 Spatial -->
+        <div class="gallery-container">
+          <div class="gallery-slider" id="galleryG1SpatialSlider">
+            <!-- Single Page: Both demos (2x2) -->
+            <div class="gallery-page">
+              <div class="demo-grid-2x2" id="g1SpatialPage1"></div>
+            </div>
+          </div>
+          
+          <!-- No navigation needed for single page -->
+        </div>
       </div>
     </div>
   </section>

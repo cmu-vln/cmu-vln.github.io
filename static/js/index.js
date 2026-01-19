@@ -243,6 +243,11 @@ $(document).ready(function() {
     initGo2SelfGallery();
     initGo2SpatialGallery();
     
+    // Initialize g1 galleries
+    initG1OriGallery();
+    initG1SelfGallery();
+    initG1SpatialGallery();
+    
     // Initialize lazy loading for videos
     initLazyLoadVideos();
     
@@ -411,6 +416,34 @@ const go2SpatialDemoData = [
   { name: "FRC Spatial Person 1", folder: "bagfile_frc_spatial_person_1" },
 ];
 
+// G1 (Humanoid) Original demo data - 7 demos from g1/ori
+const g1OriDemoData = [
+  { name: "FRC Fire 1", folder: "bagfile_frc_fire_1" },
+  { name: "FRC Humanoid 1", folder: "bagfile_frc_humanoid_1" },
+  { name: "HCI Microwave 1", folder: "bagfile_hci_microwave_1" },
+  { name: "HCI Vacuum Cleaner 1", folder: "bagfile_hci_vacuum_cleaner_1" },
+
+  { name: "NSH 3 Extinguisher 1", folder: "bagfile_nsh_3_extinguisher_1" },
+  { name: "NSH 3 TV 1", folder: "bagfile_nsh_3_tv_1" },
+  { name: "NSH 4 Printer 1", folder: "bagfile_nsh_4_printer_1" },
+];
+
+// G1 Self attribute demo data - 5 demos from g1/self
+const g1SelfDemoData = [
+  { name: "FRC Whiteboard 1", folder: "bagfile_frc_whiteboard_1" },
+  { name: "HCI Grey Sofa 1", folder: "bagfile_hci_grey_sofa_1" },
+  { name: "NSH 3 Trash Can 1", folder: "bagfile_nsh_3_trash_can_1" },
+  { name: "NSH 3 Trash Can 2", folder: "bagfile_nsh_3_trash_can_2" },
+
+  { name: "NSH 4 Chair 1", folder: "bagfile_nsh_4_chair_1" },
+];
+
+// G1 Spatial condition demo data - 2 demos from g1/spatial
+const g1SpatialDemoData = [
+  { name: "FRC Person 1", folder: "bagfile_frc_person_1" },
+  { name: "HCI TV 1", folder: "bagfile_hci_tv_1" },
+];
+
 let currentGalleryPage = 0;
 const totalPages = 4;
 const demosPerPage = 6;
@@ -430,6 +463,18 @@ const go2SelfDemosPerPage = 4;
 let currentGo2SpatialGalleryPage = 0;
 const totalGo2SpatialPages = 2;
 const go2SpatialDemosPerPage = 4;
+
+let currentG1OriGalleryPage = 0;
+const totalG1OriPages = 2;
+const g1OriDemosPerPage = 4;
+
+let currentG1SelfGalleryPage = 0;
+const totalG1SelfPages = 2;
+const g1SelfDemosPerPage = 4;
+
+let currentG1SpatialGalleryPage = 0;
+const totalG1SpatialPages = 1;
+const g1SpatialDemosPerPage = 4;
 
 // Initialize demo gallery (original)
 function initDemoGallery() {
@@ -554,6 +599,62 @@ function initGo2SpatialGallery() {
   }
   
   updateGo2SpatialNavigationButtons();
+}
+
+// Initialize g1 ori gallery
+function initG1OriGallery() {
+  // Use demos in the order specified in g1OriDemoData array (no interleaving)
+  const demos = g1OriDemoData;
+  
+  for (let page = 0; page < totalG1OriPages; page++) {
+    const pageElement = document.getElementById(`g1OriPage${page + 1}`);
+    const startIdx = page * g1OriDemosPerPage;
+    
+    for (let i = startIdx; i < startIdx + g1OriDemosPerPage; i++) {
+      if (i < demos.length) {
+        const demo = demos[i];
+        const demoCell = createDemoCell(demo, 'g1', 'ori');
+        pageElement.appendChild(demoCell);
+      }
+    }
+  }
+  
+  updateG1OriNavigationButtons();
+}
+
+// Initialize g1 self gallery
+function initG1SelfGallery() {
+  // Use demos in the order specified in g1SelfDemoData array (no interleaving)
+  const demos = g1SelfDemoData;
+  
+  for (let page = 0; page < totalG1SelfPages; page++) {
+    const pageElement = document.getElementById(`g1SelfPage${page + 1}`);
+    const startIdx = page * g1SelfDemosPerPage;
+    
+    for (let i = startIdx; i < startIdx + g1SelfDemosPerPage; i++) {
+      if (i < demos.length) {
+        const demo = demos[i];
+        const demoCell = createDemoCell(demo, 'g1', 'self');
+        pageElement.appendChild(demoCell);
+      }
+    }
+  }
+  
+  updateG1SelfNavigationButtons();
+}
+
+// Initialize g1 spatial gallery
+function initG1SpatialGallery() {
+  // Use demos in the order specified in g1SpatialDemoData array (no interleaving)
+  const demos = g1SpatialDemoData;
+  
+  // Only one page for 2 demos
+  const pageElement = document.getElementById('g1SpatialPage1');
+  
+  demos.forEach(demo => {
+    const demoCell = createDemoCell(demo, 'g1', 'spatial');
+    pageElement.appendChild(demoCell);
+  });
 }
 
 // Load instruction data for a demo
@@ -726,9 +827,8 @@ function createDemoCell(demo, robot = 'car', type = 'ori') {
   footageVideo.dataset.loaded = 'false'; // Track loading state
   const footageSource = document.createElement('source');
   const footageName = demo.folder.replace('bagfile_', '');
-  // Go2 robot uses 'go2_' prefix for footage files
-  const footagePrefix = robot === 'go2' ? 'go2_' : '';
-  footageSource.src = `./static/videos_vp9_compressed/${robot}/${type}/${demo.folder}/${footagePrefix}${footageName}_footage_vp9.webm`;
+  // All robots use unified naming without prefix
+  footageSource.src = `./static/videos_vp9_compressed/${robot}/${type}/${demo.folder}/${footageName}_footage_vp9.webm`;
   footageSource.type = 'video/webm';
   footageVideo.appendChild(footageSource);
   
@@ -982,6 +1082,94 @@ function updateGo2SpatialNavigationButtons() {
   nextBtn.disabled = false;
 }
 
+// Navigate g1 ori gallery
+function navigateG1OriGallery(direction) {
+  let newPage = currentG1OriGalleryPage + direction;
+  
+  if (newPage < 0) {
+    newPage = totalG1OriPages - 1;
+  } else if (newPage >= totalG1OriPages) {
+    newPage = 0;
+  }
+  
+  const currentPageElement = document.getElementById(`g1OriPage${currentG1OriGalleryPage + 1}`);
+  if (currentPageElement) {
+    const currentVideos = currentPageElement.querySelectorAll('video');
+    currentVideos.forEach(video => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  }
+  
+  currentG1OriGalleryPage = newPage;
+  const slider = document.getElementById('galleryG1OriSlider');
+  slider.style.transform = `translateX(-${currentG1OriGalleryPage * 100}%)`;
+  document.getElementById('currentG1OriPage').textContent = currentG1OriGalleryPage + 1;
+  updateG1OriNavigationButtons();
+  
+  setTimeout(() => {
+    const newPageElement = document.getElementById(`g1OriPage${currentG1OriGalleryPage + 1}`);
+    if (newPageElement) {
+      const newVideos = newPageElement.querySelectorAll('video');
+      newVideos.forEach(video => {
+        video.currentTime = 0;
+        video.play().catch(e => console.log('G1 ori video play failed:', e));
+      });
+    }
+  }, 100);
+}
+
+function updateG1OriNavigationButtons() {
+  const prevBtn = document.getElementById('prevG1OriBtn');
+  const nextBtn = document.getElementById('nextG1OriBtn');
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
+}
+
+// Navigate g1 self gallery
+function navigateG1SelfGallery(direction) {
+  let newPage = currentG1SelfGalleryPage + direction;
+  
+  if (newPage < 0) {
+    newPage = totalG1SelfPages - 1;
+  } else if (newPage >= totalG1SelfPages) {
+    newPage = 0;
+  }
+  
+  const currentPageElement = document.getElementById(`g1SelfPage${currentG1SelfGalleryPage + 1}`);
+  if (currentPageElement) {
+    const currentVideos = currentPageElement.querySelectorAll('video');
+    currentVideos.forEach(video => {
+      video.pause();
+      video.currentTime = 0;
+    });
+  }
+  
+  currentG1SelfGalleryPage = newPage;
+  const slider = document.getElementById('galleryG1SelfSlider');
+  slider.style.transform = `translateX(-${currentG1SelfGalleryPage * 100}%)`;
+  document.getElementById('currentG1SelfPage').textContent = currentG1SelfGalleryPage + 1;
+  updateG1SelfNavigationButtons();
+  
+  setTimeout(() => {
+    const newPageElement = document.getElementById(`g1SelfPage${currentG1SelfGalleryPage + 1}`);
+    if (newPageElement) {
+      const newVideos = newPageElement.querySelectorAll('video');
+      newVideos.forEach(video => {
+        video.currentTime = 0;
+        video.play().catch(e => console.log('G1 self video play failed:', e));
+      });
+    }
+  }, 100);
+}
+
+function updateG1SelfNavigationButtons() {
+  const prevBtn = document.getElementById('prevG1SelfBtn');
+  const nextBtn = document.getElementById('nextG1SelfBtn');
+  prevBtn.disabled = false;
+  nextBtn.disabled = false;
+}
+
 // Global variables for modal video control
 let modalFinalVideo = null;
 let modalFootageVideo = null;
@@ -1032,9 +1220,8 @@ function openVideoModal(demo, robot = 'car', type = 'ori') {
   modalFootageVideo.muted = true;
   const footageSource = document.createElement('source');
   const footageName = demo.folder.replace('bagfile_', '');
-  // Go2 robot uses 'go2_' prefix for footage files
-  const footagePrefix = robot === 'go2' ? 'go2_' : '';
-  footageSource.src = `./static/videos_vp9/${robot}/${type}/${demo.folder}/${footagePrefix}${footageName}_footage_vp9.webm`;
+  // All robots use unified naming without prefix
+  footageSource.src = `./static/videos_vp9/${robot}/${type}/${demo.folder}/${footageName}_footage_vp9.webm`;
   footageSource.type = 'video/webm';
   modalFootageVideo.appendChild(footageSource);
   
@@ -1390,6 +1577,24 @@ function resumeVideosAfterModal() {
   const currentGo2SpatialPage = document.getElementById(`go2SpatialPage${currentGo2SpatialGalleryPage + 1}`);
   if (currentGo2SpatialPage) {
     visibleCells.push(...currentGo2SpatialPage.querySelectorAll('.demo-cell:not(.empty)'));
+  }
+  
+  // G1 ori gallery current page
+  const currentG1OriPage = document.getElementById(`g1OriPage${currentG1OriGalleryPage + 1}`);
+  if (currentG1OriPage) {
+    visibleCells.push(...currentG1OriPage.querySelectorAll('.demo-cell:not(.empty)'));
+  }
+  
+  // G1 self gallery current page
+  const currentG1SelfPage = document.getElementById(`g1SelfPage${currentG1SelfGalleryPage + 1}`);
+  if (currentG1SelfPage) {
+    visibleCells.push(...currentG1SelfPage.querySelectorAll('.demo-cell:not(.empty)'));
+  }
+  
+  // G1 spatial gallery (only one page)
+  const g1SpatialPage = document.getElementById('g1SpatialPage1');
+  if (g1SpatialPage) {
+    visibleCells.push(...g1SpatialPage.querySelectorAll('.demo-cell:not(.empty)'));
   }
   
   // Synchronize and play videos in each cell
