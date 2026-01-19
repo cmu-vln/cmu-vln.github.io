@@ -418,30 +418,29 @@ const go2SpatialDemoData = [
 
 // G1 (Humanoid) Original demo data - 7 demos from g1/ori
 const g1OriDemoData = [
-  { name: "FRC Fire 1", folder: "bagfile_frc_fire_1" },
-  { name: "FRC Humanoid 1", folder: "bagfile_frc_humanoid_1" },
   { name: "HCI Microwave 1", folder: "bagfile_hci_microwave_1" },
   { name: "HCI Vacuum Cleaner 1", folder: "bagfile_hci_vacuum_cleaner_1" },
-
   { name: "NSH 3 Extinguisher 1", folder: "bagfile_nsh_3_extinguisher_1" },
   { name: "NSH 3 TV 1", folder: "bagfile_nsh_3_tv_1" },
   { name: "NSH 4 Printer 1", folder: "bagfile_nsh_4_printer_1" },
+  { name: "FRC Fire 1", folder: "bagfile_frc_fire_1" },
+  { name: "FRC Humanoid 1", folder: "bagfile_frc_humanoid_1" },
 ];
 
 // G1 Self attribute demo data - 5 demos from g1/self
 const g1SelfDemoData = [
-  { name: "FRC Whiteboard 1", folder: "bagfile_frc_whiteboard_1" },
   { name: "HCI Grey Sofa 1", folder: "bagfile_hci_grey_sofa_1" },
   { name: "NSH 3 Trash Can 1", folder: "bagfile_nsh_3_trash_can_1" },
   { name: "NSH 3 Trash Can 2", folder: "bagfile_nsh_3_trash_can_2" },
-
   { name: "NSH 4 Chair 1", folder: "bagfile_nsh_4_chair_1" },
+
+  { name: "FRC Whiteboard 1", folder: "bagfile_frc_whiteboard_1" },
 ];
 
 // G1 Spatial condition demo data - 2 demos from g1/spatial
 const g1SpatialDemoData = [
-  { name: "FRC Person 1", folder: "bagfile_frc_person_1" },
   { name: "HCI TV 1", folder: "bagfile_hci_tv_1" },
+  { name: "FRC Person 1", folder: "bagfile_frc_person_1" },
 ];
 
 let currentGalleryPage = 0;
