@@ -1794,14 +1794,38 @@ document.addEventListener('DOMContentLoaded', function() {
           const timeString = timeSpan.textContent.trim();
           const timeSeconds = parseTimeToSeconds(timeString);
           
-          // Find the parent video-slide
-          const videoSlide = frame.closest('.video-slide');
+          // Find the parent video-slide (for carousel videos)
+          let videoSlide = frame.closest('.video-slide');
+          
           if (videoSlide) {
             // Seek the YouTube video to this time
             seekYouTubeVideo(videoSlide, timeSeconds);
             console.log(`Clicked frame with time ${timeString} (${timeSeconds}s)`);
           } else {
-            console.error('Could not find parent video-slide');
+            // For standalone videos (not in carousel), find the closest section with iframe
+            const section = frame.closest('section');
+            if (section) {
+              const iframe = section.querySelector('iframe');
+              if (iframe) {
+                // Use postMessage to seek the standalone video
+                iframe.contentWindow.postMessage(JSON.stringify({
+                  event: 'command',
+                  func: 'seekTo',
+                  args: [timeSeconds, true]
+                }), '*');
+                
+                // Also send play command
+                setTimeout(() => {
+                  iframe.contentWindow.postMessage(JSON.stringify({
+                    event: 'command',
+                    func: 'playVideo',
+                    args: []
+                  }), '*');
+                }, 100);
+                
+                console.log(`Clicked standalone video frame with time ${timeString} (${timeSeconds}s)`);
+              }
+            }
           }
         });
       }
