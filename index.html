@@ -752,6 +752,137 @@
   </section>
 
 
+  <!-- Supplementary Materials (RA-L Revision) -->
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title is-3 has-text-centered" style="margin-bottom: 0.5rem;">Supplementary Materials (RA-L Revision)</h2>
+        <p class="has-text-centered" style="margin-top: 0; margin-bottom: 2.5rem; color: #7a7a7a; font-style: italic;">Additional figures and statistics supporting the revised manuscript.</p>
+
+        <!-- Subsection 1a: Floor Plan Gallery -->
+        <h3 class="title is-4 has-text-centered" style="margin-top: 1rem; margin-bottom: 1rem;">15 Real-World Test Environments</h3>
+        <p class="has-text-centered" style="color: #7a7a7a; font-size: 0.9rem; font-style: italic; margin-bottom: 1.5rem;">Use the arrows to step through floor plans of all 15 evaluated scenes (4 floor-scale + 11 unit-test).</p>
+        <div style="max-width: 760px; margin: 0 auto;">
+          <div style="text-align: center; min-height: 460px; display: flex; align-items: center; justify-content: center; background: #fafafa; border-radius: 8px; padding: 1rem;">
+            <img id="floorPlanImg" src="static/images/rebuttal/floor_plans/long_range/cic.png" alt="Floor plan" style="max-width: 100%; max-height: 440px; height: auto; object-fit: contain;">
+          </div>
+          <div id="floorPlanCaption" style="margin-top: 0.75rem; text-align: center; font-style: italic; color: #555;">Loading...</div>
+          <div class="gallery-nav" style="margin-top: 1rem; text-align: center;">
+            <button onclick="navigateFloorPlan(-1)" style="margin-right: 0.75rem;"><i class="fas fa-chevron-left"></i> Previous</button>
+            <span style="margin: 0 0.5rem; font-weight: 500;">Scene <span id="floorPlanIdx">1</span> of 15</span>
+            <button onclick="navigateFloorPlan(1)" style="margin-left: 0.75rem;">Next <i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+
+        <!-- Subsection 1b: Environment Scale & Path-Length Table -->
+        <h3 class="title is-4 has-text-centered" style="margin-top: 3rem; margin-bottom: 1rem;">Environment Scale &amp; Path Length</h3>
+        <div style="max-width: 820px; margin: 0 auto;">
+          <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="text-align: center;">
+            <thead>
+              <tr>
+                <th style="text-align: center;">Setting</th>
+                <th style="text-align: center;">Scenes</th>
+                <th style="text-align: center;">Episodes</th>
+                <th style="text-align: center;">Area (m²)</th>
+                <th style="text-align: center;">GT Path Length (m)</th>
+                <th style="text-align: center;">Real Path Length (m)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: left;">Simulation Benchmarks</td>
+                <td>47</td>
+                <td>8,195</td>
+                <td>98.38</td>
+                <td>6.78</td>
+                <td>10.72</td>
+              </tr>
+              <tr>
+                <td style="text-align: left;">Real-world (all scenes)</td>
+                <td>15</td>
+                <td>78</td>
+                <td>432.17</td>
+                <td>16.24</td>
+                <td>48.24</td>
+              </tr>
+              <tr>
+                <td style="text-align: left;">Real-world (4 floor-scale)</td>
+                <td>4</td>
+                <td>4</td>
+                <td>1,007.21</td>
+                <td>84.43</td>
+                <td>280.22</td>
+              </tr>
+            </tbody>
+          </table>
+          <p style="color: #7a7a7a; font-size: 0.85rem; font-style: italic;">For simulation, Real Path Length is averaged over 4,840 successful episodes only. For real-world experiments, path-length statistics cover the 78 trials with complete rosbag recordings; environment-scale statistics cover all 15 scenes.</p>
+        </div>
+
+        <!-- Subsection 2: Distribution Charts -->
+        <h3 class="title is-4 has-text-centered" style="margin-top: 3rem; margin-bottom: 1rem;">Per-Setting Distribution</h3>
+        <div class="columns is-centered" style="max-width: 1000px; margin: 0 auto;">
+          <div class="column has-text-centered">
+            <img src="static/images/rebuttal/q4_area.png" alt="Area distribution" style="max-width: 100%; height: auto;">
+          </div>
+          <div class="column has-text-centered">
+            <img src="static/images/rebuttal/q4_gt_path.png" alt="GT geodesic distance distribution" style="max-width: 100%; height: auto;">
+          </div>
+          <div class="column has-text-centered">
+            <img src="static/images/rebuttal/q4_real_path.png" alt="Traversed path length distribution" style="max-width: 100%; height: auto;">
+          </div>
+        </div>
+        <p class="has-text-centered" style="max-width: 820px; margin: 0 auto; color: #555; font-style: italic; font-size: 0.9rem;">Mean (bar) and interquartile range (error bar, P25–P75) of scene area, GT geodesic distance, and traversed path length. Real-world environments are roughly 4× larger than simulation benchmarks on average; the 4 floor-scale scenes reach ~10×.</p>
+
+        <!-- Subsection 3: VLM Runtime -->
+        <h3 class="title is-4 has-text-centered" style="margin-top: 3rem; margin-bottom: 1rem;">VLM Runtime Profile</h3>
+        <div style="text-align: center;">
+          <img src="static/images/rebuttal/vlm_latency.png" alt="VLM latency histogram" style="max-width: 620px; width: 100%; height: auto;">
+        </div>
+        <p style="max-width: 820px; margin: 1rem auto 0; color: #333; font-size: 0.95rem;">
+          Across 1,000 VLM calls, mean latency is <strong>1.15&nbsp;s</strong> and 95% of queries return within 2.03&nbsp;s. The aggregate query rate across the three query types (Next-room, Early-stop, Target-verification) averages <strong>6.4 queries/min</strong>. To keep VLM inference off the critical path, SysNav prefetches the next-room query as soon as the robot anticipates finishing the current room, so most queries complete while the robot is still in motion and the system rarely pauses on VLM responses.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Floor-plan gallery (15 real-world scenes)
+    const floorPlans = [
+      { file: 'long_range/cic.png',          name: 'CIC',         area: 982.73,  rooms: 22, type: 'floor-scale' },
+      { file: 'long_range/gates_4th.png',    name: 'Gates 4F',    area: 1271.47, rooms: 13, type: 'floor-scale' },
+      { file: 'long_range/gates_5th.png',    name: 'Gates 5F',    area: 951.14,  rooms: 13, type: 'floor-scale' },
+      { file: 'long_range/nsh_1th.png',      name: 'NSH 1F',      area: 823.49,  rooms: 21, type: 'floor-scale' },
+      { file: 'unit_test/frc_1th.png',       name: 'FRC 1F',      area: 488.42,  type: 'unit-test' },
+      { file: 'unit_test/nsh_3th.png',       name: 'NSH 3F',      area: 434.51,  type: 'unit-test' },
+      { file: 'unit_test/gates.png',         name: 'Gates',       area: 380.71,  type: 'unit-test' },
+      { file: 'unit_test/nsh_4th.png',       name: 'NSH 4F',      area: 206.80,  type: 'unit-test' },
+      { file: 'unit_test/frc.png',           name: 'FRC',         area: 195.84,  type: 'unit-test' },
+      { file: 'unit_test/nsh.png',           name: 'NSH',         area: 174.75,  type: 'unit-test' },
+      { file: 'unit_test/hci_2.png',         name: 'HCI 2',       area: 155.05,  type: 'unit-test' },
+      { file: 'unit_test/easy.png',          name: 'NSH 3F (Moon)', area: 121.70, type: 'unit-test' },
+      { file: 'unit_test/nsh_3th_hci.png',   name: 'NSH 3F (HCI)', area: 99.69,  type: 'unit-test' },
+      { file: 'unit_test/hci.png',           name: 'HCI',         area: 98.57,   type: 'unit-test' },
+      { file: 'unit_test/katia.png',         name: 'Katia',       area: 97.73,   type: 'unit-test' }
+    ];
+    let floorPlanIdx = 0;
+    function renderFloorPlan() {
+      const fp = floorPlans[floorPlanIdx];
+      document.getElementById('floorPlanImg').src = `static/images/rebuttal/floor_plans/${fp.file}`;
+      const parts = [fp.name];
+      if (fp.area !== null) parts.push(`${fp.area.toFixed(2)} m²`);
+      if (fp.rooms)         parts.push(`${fp.rooms} rooms`);
+      parts.push(fp.type);
+      document.getElementById('floorPlanCaption').textContent = parts.join(' · ');
+      document.getElementById('floorPlanIdx').textContent = floorPlanIdx + 1;
+    }
+    function navigateFloorPlan(direction) {
+      floorPlanIdx = (floorPlanIdx + direction + floorPlans.length) % floorPlans.length;
+      renderFloorPlan();
+    }
+    document.addEventListener('DOMContentLoaded', renderFloorPlan);
+  </script>
+
+
   <!-- Video Modal -->
   <div id="videoModal" class="video-modal">
     <span class="modal-close" onclick="closeVideoModal()">&times;</span>
